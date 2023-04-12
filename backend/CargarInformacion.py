@@ -15,11 +15,12 @@ class CargarInformacion:
             activos_dict = {}
             for i in range(2, len(data)):
                 activo_data = data[i].strip().split(",")
-                nombre = activo_data[0]
-                simbolo = activo_data[1]
-                activo = Activo(nombre, simbolo)
-                activo.descargar_datos(cartera.periodo)
-                activos_dict[simbolo] = activo
+                if len(activo_data) != 1:
+                    nombre = activo_data[0]
+                    simbolo = activo_data[1]
+                    activo = Activo(nombre, simbolo)
+                    activo.descargar_datos(cartera.periodo)
+                    activos_dict[simbolo] = activo
             cartera.activos = activos_dict
         return cartera
 
@@ -28,7 +29,5 @@ class CargarInformacion:
             f.write(cartera.nombre + "\n")
             f.write(cartera.periodo + "\n")
             for simbolo, activo in cartera.activos.items():
-                if simbolo not in cartera.activos.keys():
-                    f.write("{},{},{},{},{},{}\n".format(activo.nombre, simbolo, ",".join(str(precio) for precio in activo.open), ",".join(str(precio) for precio in activo.close), ",".join(str(precio) for precio in activo.high), ",".join(str(precio) for precio in activo.low)))
-                else:
-                    return
+                f.write("{},{},{},{},{},{},{}\n".format(activo.nombre, simbolo, ",".join(str(precio) for precio in activo.open), ",".join(str(precio) for precio in activo.close), ",".join(str(precio) for precio in activo.high), ",".join(str(precio) for precio in activo.low), ",".join(str(precio) for precio in activo.adj_close)))
+
