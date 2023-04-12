@@ -10,6 +10,8 @@ class CargarInformacion:
         cartera = CarteraDeInversiones("", "", self.archivo)
         with open(self.archivo, "r") as f:
             data = f.readlines()
+            if len(data) < 2:
+                return None
             cartera.nombre = data[0].strip()
             cartera.periodo = data[1].strip()
             activos_dict = {}
@@ -25,7 +27,7 @@ class CargarInformacion:
         return cartera
 
     def guardar_archivo(self, cartera):
-        with open(self.archivo, "a") as f:
+        with open(self.archivo, "w") as f:
             f.write(cartera.nombre + "\n")
             f.write(cartera.periodo + "\n")
             for simbolo, activo in cartera.activos.items():
