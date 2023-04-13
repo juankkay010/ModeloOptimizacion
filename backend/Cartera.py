@@ -1,5 +1,5 @@
 from backend.Activo import *
-from .CargarInformacion import CargarInformacion
+from .CargarInformacion import CargarInformacionCartera
 from backend.Markowitz import *
 from .Markowitz import Markowitz
 import numpy as np
@@ -11,7 +11,8 @@ class CarteraDeInversiones:
         self.periodo = periodo
         self.archivo = archivo
         self.activos = {}
-        self.cargar_informacion = CargarInformacion(self.archivo)
+        self.cargar_informacion = CargarInformacionCartera(self.archivo)
+        self.cargar_informacion.guardar_archivo(self)  # Error, no guarda
         self.modelo_markowitz = None
 
     def verificar_si_existe_activo(self, simbolo_activo):

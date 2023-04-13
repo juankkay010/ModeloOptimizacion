@@ -1,7 +1,7 @@
 from .Activo import Activo
 
 
-class CargarInformacion:
+class CargarInformacionCartera:
     def __init__(self, archivo):
         self.archivo = archivo
 
@@ -32,4 +32,3 @@ class CargarInformacion:
             f.write(cartera.periodo + "\n")
             for simbolo, activo in cartera.activos.items():
                 f.write("{},{},{},{},{},{},{}\n".format(activo.nombre, simbolo, ",".join(str(precio) for precio in activo.open), ",".join(str(precio) for precio in activo.close), ",".join(str(precio) for precio in activo.high), ",".join(str(precio) for precio in activo.low), ",".join(str(precio) for precio in activo.adj_close)))
-
