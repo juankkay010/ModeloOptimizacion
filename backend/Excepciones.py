@@ -26,3 +26,8 @@ class EspaciosSinRellenar(ErrorSoftware):
 class CarteraExistente(ErrorSoftware):
     def __init__(self, mensaje):
         super().__init__(mensaje)
+
+
+class ActivoExistente(ErrorSoftware):
+    def __init__(self, mensaje):
+        super().__init__(mensaje)

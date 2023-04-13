@@ -1,4 +1,5 @@
 from typing import Optional
+import os
 from .Usuario import *
 from .Excepciones import *
 
@@ -53,7 +54,7 @@ class Software:
 
     def guardar_datos_usuario(self, usuario: Usuario):
         with open("Usuarios/usuarios.txt", "a") as f:
-            f.write(f"{usuario.username},{usuario.password}")
+            f.write(f"{usuario.username},{usuario.password},{usuario.cartera.archivo}{os.linesep}")
 
 
 
