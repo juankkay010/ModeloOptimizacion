@@ -53,6 +53,14 @@ class CarteraDeInversiones:
         dp_concatenado = pd.concat([lista_activo1, lista_activo2, tabla], axis=1)
         return tabulate(dp_concatenado, headers=["Activo 1", "Activo 2", "Rendimiento esperado"])
 
+    def riesgo_cartera(self):
+        tabla = self.modelo_markowitz.calcular_riesgo_cartera_de_inversion()
+        lista_activo1 = pd.DataFrame([i for i in range(0, 101, 20)])
+        lista_activo2 = pd.DataFrame([i for i in range(100, -1, -20)])
+        dp_concatenado = pd.concat([lista_activo1, lista_activo2, tabla], axis=1)
+        return tabulate(dp_concatenado, headers=["Activo 1", "Activo 2", "Riesgo del portafolio"])
+
+
 
 
 
