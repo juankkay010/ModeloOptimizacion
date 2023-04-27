@@ -1,5 +1,6 @@
 from backend.Activo import *
 from .CargarInformacion import CargarInformacionCartera
+from .Excepciones import *
 from backend.Markowitz import *
 from .Markowitz import Markowitz
 import numpy as np
@@ -11,8 +12,9 @@ class CarteraDeInversiones:
         self.periodo = periodo
         self.archivo = archivo
         self.activos = {}
-        self.cargar_informacion = CargarInformacionCartera(self.archivo)
-        self.cargar_informacion.guardar_archivo(self)  # Error, no guarda
+        if archivo:
+            self.cargar_informacion = CargarInformacionCartera(self.archivo)
+            self.cargar_informacion.guardar_archivo(self)
         self.modelo_markowitz = None
 
     def verificar_si_existe_activo(self, simbolo_activo):
@@ -21,14 +23,18 @@ class CarteraDeInversiones:
         else:
             return False
 
+    def get_activos(self):
+        return self.activos
+
     def agregar_activo(self, nombre, simbolo):
         if not self.verificar_si_existe_activo(simbolo):
             activo = Activo(nombre, simbolo)
             activo.descargar_datos(self.periodo)
             self.activos[simbolo] = activo
-            self.cargar_informacion.guardar_archivo(self)
+            if self.archivo:
+                self.cargar_informacion.guardar_archivo(self)
         else:
-            return
+            raise ActivoExistente("El activo ya se encuentra en la cartera")
 
     def eliminar_activo(self, simbolo_activo):
         if self.verificar_si_existe_activo(simbolo_activo):
@@ -60,19 +66,3 @@ class CarteraDeInversiones:
         lista_activo2 = pd.DataFrame([i for i in range(100, -1, -20)])
         dp_concatenado = pd.concat([lista_activo1, lista_activo2, tabla], axis=1)
         return tabulate(dp_concatenado, headers=["Activo 1", "Activo 2", "Riesgo del portafolio"])
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

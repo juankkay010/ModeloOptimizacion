@@ -53,7 +53,8 @@ class Software:
 
     def guardar_datos_usuario(self, usuario: Usuario):
         with open("Usuarios/usuarios.txt", "a") as f:
-            f.write(f"{usuario.username},{usuario.password}")
+            f.write(usuario.username + "\n")
+            f.write(usuario.password + "\n")
 
 
 

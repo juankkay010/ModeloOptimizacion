@@ -60,29 +60,3 @@ class Markowitz:
             suma_covarianza = 2*porcentajes[i]*(100-porcentajes[i])*covarianza
             resultado.append((suma_ponderada1+suma_ponderada2+suma_covarianza)*0.1)
         return pd.DataFrame(resultado)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

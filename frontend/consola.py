@@ -13,6 +13,10 @@ class Consola:
         }
         self.menu_opciones_mostrar = {
             "1": self.crear_cartera,
+            "2": self.agregar_activo,
+            "3": self.eliminar_activo,
+            "4": self.seleccionar_activo,
+            "7": self.salir
 
         }
 
@@ -88,10 +92,13 @@ class Consola:
             return True
         except EspaciosSinRellenar as err:
             print(err.mensaje)
+            return False
         except CuentaNoExistenteError as err:
             print(err.mensaje)
+            return False
         except ContrasenaInvalida as err:
             print(err.mensaje)
+            return False
 
     def salir(self):
         sys.exit(0)
@@ -108,11 +115,37 @@ class Consola:
         except CarteraExistente as err:
             print(err.mensaje)
 
+    def agregar_activo(self):
+        nombre = input("Ingrese el nombre del activo: ")
+        simbolo = input("Ingrese el simobolo del activo: ")
+        try:
+            usuario_actual = self.software.get_usuario_actual()
+            if usuario_actual is not None:
+                usuario_actual.cartera.agregar_activo(nombre, simbolo)
+                print(f"El activo {simbolo} se ha agregado correctamente")
+        except ActivoExistente as err:
+            print(err.mensaje)
 
+    def eliminar_activo(self):  # No se ha implementado
+        pass
 
-
-
-
-
-
-
+    def seleccionar_activo(self):
+        usuario_actual = self.software.get_usuario_actual()
+        if usuario_actual is not None:
+            activos = usuario_actual.cartera.get_activos()
+            if activos:
+                print("==== LISTA DE ACTIVOS ====")
+                for i, activo in enumerate(activos, 1):
+                    print(f"{i}: {activo.simbolo}")
+                opcion = input("Seleccione el número del activo que desea ver: ")
+                try:
+                    opcion = int(opcion)
+                    if 0 < opcion <= len(activos):
+                        activo_seleccionado = activos[opcion - 1]
+                        print(activo_seleccionado.tabla_informacion_activo())
+                    else:
+                        print(f"{opcion} no es una opción válida")
+                except ValueError:
+                    print("Opción inválida")
+            else:
+                print("La cartera no tiene activos")
